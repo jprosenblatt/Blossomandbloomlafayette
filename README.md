@@ -21,19 +21,17 @@ Then open http://localhost:8000.
 
 ## Publish on GitHub Pages
 
-1. Create an empty public repo named `marci-floral` on GitHub, then push:
+1. The code lives at https://github.com/jprosenblatt/Blossomandbloomlafayette. To connect a local copy and push:
 
    ```bash
-   git remote add origin https://github.com/jprosenblatt/marci-floral.git
+   git remote add origin https://github.com/jprosenblatt/Blossomandbloomlafayette.git
    git push -u origin main
    ```
 
-   Or do both in one step with `gh repo create marci-floral --public --source . --push`.
-
 2. In the repo on GitHub, go to **Settings → Pages**, set **Source** to *Deploy from a branch*, and pick `main` and `/ (root)`.
-3. After a minute or so the site is live at https://jprosenblatt.github.io/marci-floral/.
+3. After a minute or so the site is live at https://jprosenblatt.github.io/Blossomandbloomlafayette/.
 
-If you use a different repo name or a custom domain, update `og:url` and `og:image` near the top of `index.html` so link previews keep working.
+If the repo is renamed or you add a custom domain, update `og:url` and `og:image` near the top of `index.html` so link previews keep working.
 
 ## Common edits
 

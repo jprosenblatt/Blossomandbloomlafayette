@@ -179,7 +179,6 @@ figcaption a:hover { text-decoration-color: currentColor; }
 .eyebrow,
 .role,
 .label,
-.services,
 .btn,
 .save,
 .footer {
@@ -263,43 +262,6 @@ h1 span { display: block; }
   line-height: 1.4;
   text-wrap: pretty;
 }
-
-.services {
-  list-style: none;
-  margin: 1.25rem 0 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: .5rem;
-  font-size: .9rem;
-  font-weight: 500;
-  letter-spacing: .04em;
-}
-
-@media (min-width: 56em) {
-  .services { justify-content: flex-start; }
-}
-
-.services li {
-  padding: .4rem .95rem;
-  border-radius: 999px;
-  background: rgb(255 253 248 / .7);
-  border: 1px solid var(--line);
-}
-
-.services li::before {
-  content: "";
-  display: inline-block;
-  width: .5rem;
-  height: .5rem;
-  margin-inline-end: .5rem;
-  border-radius: 50%;
-  background: var(--gold);
-  vertical-align: .05em;
-}
-
-.services li:nth-child(2)::before { background: var(--mauve); }
 
 .order {
   margin: 1.25rem 0 1rem;

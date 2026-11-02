@@ -1,0 +1,468 @@
+/* Colors are sampled from Marci's arrangement: gerbera gold, butter and
+   cream roses, mauve rose, statice plum, pink mum, hydrangea chartreuse,
+   and the deep foliage green used for text. */
+:root {
+  color-scheme: light;
+
+  --cream: #FBF6EA;
+  --paper: #FFFDF8;
+  --ink: #2E3815;
+  --ink-soft: #586036;
+  --line: #E6DCC2;
+
+  --gold: #D9A62A;
+  --butter: #EBCB6E;
+  --mauve: #B88897;
+  --plum: #845A88;
+  --pink: #D2A5B2;
+  --chartreuse: #A3AE3E;
+
+  --serif: "Cormorant Garamond", "Iowan Old Style", Garamond, Georgia, serif;
+  --sans: "Jost", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size-adjust: from-font;
+  line-height: 1.5;
+  background:
+    radial-gradient(48rem 36rem at 0% 0%, rgb(235 203 110 / .32), transparent 65%),
+    radial-gradient(36rem 30rem at 100% 8%, rgb(163 174 62 / .14), transparent 65%),
+    radial-gradient(44rem 34rem at 100% 100%, rgb(184 136 151 / .24), transparent 65%),
+    var(--cream);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+
+svg {
+  width: 1.15em;
+  height: 1.15em;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------- Layout ---------- */
+
+.page {
+  flex: 1;
+  width: min(100% - 2.5rem, 64rem);
+  margin-inline: auto;
+  padding-block: clamp(2rem, .5rem + 3vw, 3.5rem) 1.5rem;
+  display: grid;
+  gap: 2.5rem;
+  justify-items: center;
+}
+
+@media (min-width: 56em) {
+  .page {
+    grid-template-columns: minmax(18rem, 26rem) minmax(0, 30rem);
+    gap: clamp(3rem, 7vw, 6.5rem);
+    align-items: center;
+    justify-content: center;
+    justify-items: stretch;
+  }
+}
+
+/* ---------- Arched photo ---------- */
+
+.portrait {
+  margin: 0;
+  width: 100%;
+  animation: bloom 1.1s var(--ease) both;
+}
+
+.arch {
+  position: relative;
+  isolation: isolate;
+  /* small enough on phones that her name shows on the first screen */
+  width: min(100%, 15rem);
+  margin-inline: auto;
+}
+
+@media (min-width: 56em) {
+  .arch { width: 100%; }
+}
+
+/* soft butter-yellow sun behind the arch */
+.arch::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  width: 62%;
+  aspect-ratio: 1;
+  top: -6%;
+  left: -14%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, var(--butter), rgb(235 203 110 / 0) 70%);
+  opacity: .7;
+}
+
+/* gold hairline arch, offset like a pressed outline */
+.arch::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  translate: 1rem 1rem;
+  border: 1.5px solid var(--gold);
+  border-radius: 50% 50% 1.25rem 1.25rem / 40% 40% 1.25rem 1.25rem;
+}
+
+.arch img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 50% 50% 1.25rem 1.25rem / 40% 40% 1.25rem 1.25rem;
+  box-shadow: 0 1.5rem 3rem -1.5rem rgb(46 56 21 / .35);
+  /* nudges the cool studio-gray backdrop toward the page's cream */
+  filter: sepia(.1) saturate(1.05);
+  transition: scale 1.2s var(--ease);
+}
+
+.portrait:hover img { scale: 1.015; }
+
+figcaption {
+  margin-top: 1.75rem;
+  text-align: center;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  text-wrap: balance;
+}
+
+figcaption a {
+  color: var(--plum);
+  text-decoration-thickness: 1px;
+  text-underline-offset: .25em;
+  text-decoration-color: rgb(132 90 136 / .4);
+  transition: text-decoration-color .3s;
+}
+
+figcaption a:hover { text-decoration-color: currentColor; }
+
+/* ---------- Name and intro ---------- */
+
+.details {
+  width: 100%;
+  max-width: 30rem;
+  text-align: center;
+}
+
+@media (min-width: 56em) {
+  .details { text-align: start; }
+}
+
+.details > * {
+  --stagger: 90ms;
+  animation: rise .9s var(--ease) both;
+  animation-delay: calc(var(--sibling-index, 0) * var(--stagger) + 150ms);
+  animation-delay: calc(sibling-index() * var(--stagger) + 150ms);
+}
+
+.eyebrow,
+.role,
+.label,
+.services,
+.btn,
+.save,
+.footer {
+  font-family: var(--sans);
+  font-size-adjust: from-font;
+}
+
+.eyebrow {
+  margin: 0 0 1rem;
+  color: var(--plum);
+  font-size: .78rem;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+h1 {
+  margin: 0;
+  font-weight: 500;
+  font-size: clamp(3.4rem, 2.4rem + 4vw, 5.75rem);
+  line-height: .9;
+  letter-spacing: -.01em;
+}
+
+h1 span { display: block; }
+
+.role {
+  margin: 1.25rem 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .9rem;
+  font-size: .85rem;
+  font-weight: 500;
+  letter-spacing: .34em;
+  text-transform: uppercase;
+}
+
+.role::before,
+.role::after {
+  content: "";
+  width: 2.25rem;
+  height: 1.5px;
+  background: var(--gold);
+}
+
+@media (min-width: 56em) {
+  .role { justify-content: flex-start; }
+  .role::after { display: none; }
+}
+
+/* four petals in the bouquet's colors */
+.petals {
+  display: flex;
+  justify-content: center;
+  gap: .45rem;
+  margin: 1.5rem 0 1.25rem;
+}
+
+@media (min-width: 56em) {
+  .petals { justify-content: flex-start; }
+}
+
+.petals i {
+  width: .8rem;
+  height: .8rem;
+  border-radius: 0 70%;
+  rotate: -12deg;
+}
+
+.petals i:nth-child(1) { background: var(--gold); }
+.petals i:nth-child(2) { background: var(--mauve); }
+.petals i:nth-child(3) { background: var(--chartreuse); }
+.petals i:nth-child(4) { background: var(--pink); }
+
+.intro {
+  margin: 0;
+  font-size: 1.4rem;
+  font-style: italic;
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+.services {
+  list-style: none;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .5rem;
+  font-size: .9rem;
+  font-weight: 500;
+  letter-spacing: .04em;
+}
+
+@media (min-width: 56em) {
+  .services { justify-content: flex-start; }
+}
+
+.services li {
+  padding: .4rem .95rem;
+  border-radius: 999px;
+  background: rgb(255 253 248 / .7);
+  border: 1px solid var(--line);
+}
+
+.services li::before {
+  content: "";
+  display: inline-block;
+  width: .5rem;
+  height: .5rem;
+  margin-inline-end: .5rem;
+  border-radius: 50%;
+  background: var(--gold);
+  vertical-align: .05em;
+}
+
+.services li:nth-child(2)::before { background: var(--mauve); }
+
+.order {
+  margin: 1.25rem 0 1rem;
+  color: var(--ink-soft);
+  font-size: 1.2rem;
+  text-wrap: balance;
+}
+
+/* ---------- Contact card ---------- */
+
+.card {
+  container-type: inline-size;
+  text-align: start;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  box-shadow: 0 1.25rem 2.5rem -1.75rem rgb(46 56 21 / .35);
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem 1rem;
+  padding: 1rem 1.25rem;
+  text-decoration: none;
+}
+
+.row + .row { border-top: 1px solid var(--line); }
+
+.row-text {
+  display: grid;
+  gap: .1rem;
+  min-width: 0;
+}
+
+.label {
+  color: var(--plum);
+  font-size: .7rem;
+  font-weight: 500;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.value {
+  font-family: var(--sans);
+  font-size-adjust: from-font;
+  font-size: 1.05rem;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+.row-link { transition: background-color .25s; }
+.row-link:hover { background: rgb(235 203 110 / .14); }
+
+.row-icon {
+  width: 1.3rem;
+  height: 1.3rem;
+  color: var(--ink-soft);
+  transition: color .25s, translate .25s var(--ease);
+}
+
+.row-link:hover .row-icon {
+  color: var(--gold);
+  translate: .15rem 0;
+}
+
+.row-actions {
+  display: flex;
+  gap: .5rem;
+}
+
+/* on a narrow card, Call and Text become two wide, easy-to-tap buttons */
+@container (max-width: 26rem) {
+  .row-actions { flex-basis: 100%; }
+  .row-actions .btn { flex: 1; justify-content: center; }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  padding: .6rem 1.1rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--ink);
+  font-size: .9rem;
+  font-weight: 500;
+  letter-spacing: .04em;
+  text-decoration: none;
+  transition: background-color .25s, color .25s, border-color .25s, translate .25s var(--ease);
+}
+
+.btn:hover {
+  translate: 0 -1px;
+  border-color: var(--gold);
+  background: var(--gold);
+  color: var(--ink);
+}
+
+.btn-solid {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.save {
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  padding: .55rem .25rem;
+  font-size: .95rem;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: .35em;
+  transition: color .25s;
+}
+
+.save:hover { color: var(--plum); }
+
+a:focus-visible {
+  outline: 2px solid var(--plum);
+  outline-offset: 3px;
+  border-radius: .5rem;
+}
+
+.btn:focus-visible { border-radius: 999px; }
+.row-link:focus-visible { outline-offset: -4px; }
+
+/* ---------- Footer ---------- */
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .25rem 2rem;
+  padding: 2rem 1.25rem 2.5rem;
+  color: var(--ink-soft);
+  font-size: .8rem;
+  letter-spacing: .06em;
+  text-align: center;
+}
+
+.footer p { margin: 0; }
+
+/* ---------- Motion ---------- */
+
+@keyframes rise {
+  from { opacity: 0; translate: 0 .75rem; }
+}
+
+@keyframes bloom {
+  from { opacity: 0; scale: .97; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portrait,
+  .details > * { animation: none; }
+
+  .arch img,
+  .btn,
+  .row-icon { transition: none; }
+}
